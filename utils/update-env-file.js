@@ -3,7 +3,7 @@
  * @param {string} filePath - Path ของไฟล์ .env
  * @param {Object} updates - Object ที่เก็บ key: value ที่ต้องการอัปเดต
  */
-function updateEnvFile(filePath, updates) {
+export default function updateEnvFile(filePath, updates) {
   let content = '';
   
   // 1. อ่านไฟล์เดิมถ้ามีอยู่

@@ -24,6 +24,7 @@ switch (command) {
     displayHelp();
     break;
 
+  case 'version':
   case '--version':
   case '-v':
     console.log(`tbit v${process.env.npm_package_version || '1.0.0'}`);
