@@ -1,3 +1,5 @@
+import fs from 'fs';
+
 /**
  * อัปเดตไฟล์ .env โดยการแทนที่ค่าเดิมหรือเพิ่มต่อท้าย
  * @param {string} filePath - Path ของไฟล์ .env
