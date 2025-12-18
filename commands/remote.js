@@ -4,6 +4,7 @@ import fs from 'fs';
 import dotenv from 'dotenv';
 import readline from 'readline/promises'; // ใช้เวอร์ชัน promise เพื่อให้ใช้ await ได้
 import os from 'os';
+import updateEnvFile from '../utils/update-env-file.js';
 
 const envPath = path.join(process.cwd(), '.env.secret');
 
@@ -48,8 +49,13 @@ async function connectToEC2() {
 
   // 3. บันทึกลง .env.secret ถ้ามีการกรอกข้อมูลใหม่
   if (needsUpdate) {
-    const envContent = `AWS_EC2_INSTANCE_ID="${AWS_EC2_INSTANCE_ID}"\nAWS_PRIVATE_KEY_PATH="${AWS_PRIVATE_KEY_PATH}"\nAWS_REGION="${AWS_REGION}"\n`;
-    fs.writeFileSync(envPath, envContent, 'utf8');
+    const updates = {
+      AWS_EC2_INSTANCE_ID: AWS_EC2_INSTANCE_ID,
+      AWS_PRIVATE_KEY_PATH: AWS_PRIVATE_KEY_PATH,
+      AWS_REGION: AWS_REGION
+    };
+
+    updateEnvFile(envPath, updates);
     console.log(`\x1b[32m✅ Configuration saved to ${envPath}\x1b[0m`);
   }
 
