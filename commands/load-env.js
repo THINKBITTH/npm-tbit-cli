@@ -3,7 +3,7 @@ import path from 'path';
 import { SecretsManagerClient, GetSecretValueCommand } from "@aws-sdk/client-secrets-manager";
 import dotenv from 'dotenv';
 import updateEnvFile from '../utils/update-env-file.js';
-import readline from 'readline';
+import readline from 'readline/promises';
 
 const ROOT = process.cwd();
 const SECRET_ENV_PATH = path.join(ROOT, '.env.secret');
