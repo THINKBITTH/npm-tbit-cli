@@ -3,12 +3,17 @@ import path from 'path';
 import { SecretsManagerClient, GetSecretValueCommand } from "@aws-sdk/client-secrets-manager";
 import dotenv from 'dotenv';
 import updateEnvFile from '../utils/update-env-file.js';
+import readline from 'readline';
 
 const ROOT = process.cwd();
 const SECRET_ENV_PATH = path.join(ROOT, '.env.secret');
 const DOTENV_PATH = path.join(ROOT, '.env');
 
 async function loadEnv() {
+	const rl = readline.createInterface({
+		input: process.stdin,
+		output: process.stdout
+	});
 	try {
 		// 1. ใช้ dotenv โหลดค่าจาก .env.secret (ถ้ามีไฟล์)
 		if (fs.existsSync(SECRET_ENV_PATH)) {
@@ -30,6 +35,7 @@ async function loadEnv() {
 			}
 		}
 
+		rl.close();
 		console.log(`⏳ Fetching secret: \x1b[36m${awsSecretName}\x1b[0m...`);
 
 		// 3. ดึงข้อมูลจาก AWS Secrets Manager
