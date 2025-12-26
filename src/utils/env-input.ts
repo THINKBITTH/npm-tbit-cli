@@ -4,7 +4,12 @@ import dotenv from "dotenv";
 import updateEnvFile from "#utils/update-env-file";
 
 // Load .env.secret if it exists
-dotenv.config({ path: path.join(process.cwd(), ".env.secret") });
+dotenv.config({
+  path: path.join(process.cwd(), ".env.secret"),
+  encoding: "utf-8",
+  debug: false,
+  quiet: true,
+});
 
 export class EnvInput {
   private rl: readline.Interface;
@@ -39,11 +44,11 @@ export class EnvInput {
       this.rl.question(prompt, (answer) => {
         // ถ้ากด Enter (answer ว่าง) ให้ใช้ defaultValue
         const value = answer.trim() || defaultValue;
-        
+
         // ถ้าได้ค่ามา (จากการกรอกหรือ default) ให้บันทึกลงไฟล์
         if (value) {
           updateEnvFile(this.envPath, {
-            [key]: value
+            [key]: value,
           });
           // อัปเดต process.env ด้วยเพื่อให้เรียกใช้ต่อได้เลยไม่ต้องโหลดใหม่
           process.env[key] = value;
