@@ -4,7 +4,7 @@ import fs from 'fs';
 import dotenv from 'dotenv';
 import readline from 'readline/promises'; // ใช้เวอร์ชัน promise เพื่อให้ใช้ await ได้
 import os from 'os';
-import updateEnvFile from '../utils/update-env-file.js';
+import updateEnvFile from '../utils/update-env-file.mjs';
 
 const envPath = path.join(process.cwd(), '.env.secret');
 

@@ -42,5 +42,5 @@ export default function updateEnvFile(filePath, updates) {
   });
 
   // 4. เขียนไฟล์กลับลงไป (กรองบรรทัดว่างที่อาจเกินมา)
-  fs.writeFileSync(filePath, newLines.join('\n').trim() + '\n', 'utf8');
+  fs.writeFileSync(filePath, newLines.join('\n').trim(), 'utf8');
 }
