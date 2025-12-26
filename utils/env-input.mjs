@@ -7,7 +7,8 @@ import updateEnvFile from "./update-env-file.mjs";
 dotenv.config({ path: path.join(process.cwd(), ".env.secret") });
 
 export class EnvInput {
-  constructor() {
+  constructor(envFileName = ".env.secret") {
+    this.envPath = path.join(process.cwd(), envFileName);
     this.rl = readline.createInterface({
       input: process.stdin,
       output: process.stdout,
@@ -36,9 +37,9 @@ export class EnvInput {
         // ถ้ากด Enter (answer ว่าง) ให้ใช้ defaultValue
         const value = answer.trim() || defaultValue;
         
-        // ถ้าได้ค่ามา (จากการกรอกหรือ default) ให้บันทึกลง .env.secret
+        // ถ้าได้ค่ามา (จากการกรอกหรือ default) ให้บันทึกลงไฟล์
         if (value) {
-          updateEnvFile(path.join(process.cwd(), ".env.secret"), {
+          updateEnvFile(this.envPath, {
             [key]: value
           });
           // อัปเดต process.env ด้วยเพื่อให้เรียกใช้ต่อได้เลยไม่ต้องโหลดใหม่
