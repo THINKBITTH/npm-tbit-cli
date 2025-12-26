@@ -1,5 +1,5 @@
 import { EC2Client, ModifySecurityGroupRulesCommand } from "@aws-sdk/client-ec2";
-import { EnvInput } from "../utils/env-input.js";
+import { EnvInput } from "#utils/env-input.js";
 
 interface SgConfig {
   SG_ID: string;

@@ -13,7 +13,14 @@
     
     /* Strict Type-Checking Options */
     "noImplicitAny": true,
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "ignoreDeprecations": "5.0",
+    
+    /* Path Aliases */
+    // "baseUrl": ".",
+    "paths": {
+      "#*": ["./src/*"]
+    }
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "**/*.test.ts"]

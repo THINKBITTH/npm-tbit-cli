@@ -3,9 +3,15 @@
   "version": "1.0.6",
   "description": "",
   "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
   "type": "module",
   "bin": {
     "tbit": "dist/index.js"
+  },
+  "imports": {
+    "#*": "./dist/*.js"
   },
   "scripts": {
     "build": "tsc",

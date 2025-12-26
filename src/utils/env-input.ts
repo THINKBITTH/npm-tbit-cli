@@ -1,7 +1,7 @@
 import readline from "readline";
 import path from "path";
 import dotenv from "dotenv";
-import updateEnvFile from "./update-env-file.js";
+import updateEnvFile from "#utils/update-env-file.js";
 
 // Load .env.secret if it exists
 dotenv.config({ path: path.join(process.cwd(), ".env.secret") });

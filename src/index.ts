@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-import displayHelp from "./commands/help.js";
-import loadEnv from "./commands/load-env.js";
-import connectToEC2 from "./commands/remote.js";
-import updateSecurityGroup from "./commands/update-sgr.js";
+import displayHelp from "#commands/help.js";
+import loadEnv from "#commands/load-env.js";
+import connectToEC2 from "#commands/remote.js";
+import updateSecurityGroup from "#commands/update-sgr.js";
 
 const command: string | undefined = process.argv[2];
 
