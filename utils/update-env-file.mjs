@@ -31,15 +31,18 @@ export default function updateEnvFile(filePath, updates) {
   });
 
   // 3. สำหรับ Key ที่ไม่มีในไฟล์เดิม ให้เขียนต่อท้าย
-  Object.keys(updates).forEach(key => {
-    if (!updatedKeys.has(key)) {
-      // ตรวจสอบว่าบรรทัดสุดท้ายมี newline หรือยัง ถ้าไม่มีให้เติมก่อน
-      if (newLines.length > 0 && newLines[newLines.length - 1].trim() !== '') {
-        newLines.push(''); 
-      }
-      newLines.push(`${key}="${updates[key]}"`);
+  const keysToAdd = Object.keys(updates).filter(key => !updatedKeys.has(key));
+
+  if (keysToAdd.length > 0) {
+    // ลบบรรทัดว่างท้ายไฟล์เพื่อให้ข้อมูลต่อกันสวยงาม
+    while (newLines.length > 0 && newLines[newLines.length - 1].trim() === '') {
+      newLines.pop();
     }
-  });
+
+    keysToAdd.forEach(key => {
+      newLines.push(`${key}="${updates[key]}"`);
+    });
+  }
 
   // 4. เขียนไฟล์กลับลงไป (กรองบรรทัดว่างที่อาจเกินมา)
   fs.writeFileSync(filePath, newLines.join('\n').trim(), 'utf8');
