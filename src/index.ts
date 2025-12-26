@@ -3,8 +3,19 @@ import displayHelp from "#commands/help";
 import loadEnv from "#commands/load-env";
 import connectToEC2 from "#commands/remote";
 import updateSecurityGroup from "#commands/update-sgr";
+import checkConnection from "#commands/check-connection";
 
 const command: string | undefined = process.argv[2];
+
+// Run validation before commands (skip for help/version)
+const skipCheck = ['help', '--help', '-h', 'version', '--version', '-v', undefined].includes(command);
+
+if (!skipCheck) {
+  const isConnected = await checkConnection(true); // silent check
+  if (!isConnected) {
+    process.exit(1);
+  }
+}
 
 switch (command) {
   case 'load-env':

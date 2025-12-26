@@ -27,11 +27,13 @@
   "dependencies": {
     "@aws-sdk/client-ec2": "^3.958.0",
     "@aws-sdk/client-secrets-manager": "^3.954.0",
+    "@aws-sdk/client-sts": "^3.958.0",
     "axios": "^1.13.2",
     "dotenv": "^17.2.3"
   },
   "devDependencies": {
     "@types/node": "^25.0.3",
+    "aws-sdk-client-mock": "^4.1.0",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3"
   }
