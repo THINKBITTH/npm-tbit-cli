@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { SecretsManagerClient, GetSecretValueCommand } from "@aws-sdk/client-secrets-manager";
 import dotenv from 'dotenv';
-import updateEnvFile from '../utils/update-env-file.mjs';
+import updateEnvFile from '../utils/update-env-file.js';
 import readline from 'readline/promises';
 
 const ROOT = process.cwd();
@@ -60,7 +60,7 @@ async function loadEnv() {
 
 		console.log("\x1b[32m✅ Successfully updated .env file\x1b[0m");
 
-	} catch (error) {
+	} catch (error: any) {
 		console.error(`\x1b[31m❌ Error: ${error.message}\x1b[0m`);
 		process.exit(1);
 	}

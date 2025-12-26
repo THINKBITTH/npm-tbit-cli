@@ -2,10 +2,10 @@ import fs from 'fs';
 
 /**
  * อัปเดตไฟล์ .env โดยการแทนที่ค่าเดิมหรือเพิ่มต่อท้าย
- * @param {string} filePath - Path ของไฟล์ .env
- * @param {Object} updates - Object ที่เก็บ key: value ที่ต้องการอัปเดต
+ * @param filePath - Path ของไฟล์ .env
+ * @param updates - Object ที่เก็บ key: value ที่ต้องการอัปเดต
  */
-export default function updateEnvFile(filePath, updates) {
+export default function updateEnvFile(filePath: string, updates: Record<string, string>): void {
   let content = '';
   
   // 1. อ่านไฟล์เดิมถ้ามีอยู่
@@ -14,7 +14,7 @@ export default function updateEnvFile(filePath, updates) {
   }
 
   const lines = content.split('\n');
-  const updatedKeys = new Set();
+  const updatedKeys = new Set<string>();
 
   // 2. วนลูปแก้บรรทัดที่มี Key ตรงกัน
   let newLines = lines.map(line => {
@@ -22,7 +22,7 @@ export default function updateEnvFile(filePath, updates) {
     const match = line.match(/^([^=]+)=/);
     if (match) {
       const key = match[1].trim();
-      if (updates.hasOwnProperty(key)) {
+      if (Object.prototype.hasOwnProperty.call(updates, key)) {
         updatedKeys.add(key);
         return `${key}="${updates[key]}"`;
       }

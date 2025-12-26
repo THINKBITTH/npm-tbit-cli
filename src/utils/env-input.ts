@@ -1,13 +1,16 @@
 import readline from "readline";
 import path from "path";
 import dotenv from "dotenv";
-import updateEnvFile from "./update-env-file.mjs";
+import updateEnvFile from "./update-env-file.js";
 
 // Load .env.secret if it exists
 dotenv.config({ path: path.join(process.cwd(), ".env.secret") });
 
 export class EnvInput {
-  constructor(envFileName = ".env.secret") {
+  private rl: readline.Interface;
+  private envPath: string;
+
+  constructor(envFileName: string = ".env.secret") {
     this.envPath = path.join(process.cwd(), envFileName);
     this.rl = readline.createInterface({
       input: process.stdin,
@@ -17,14 +20,14 @@ export class EnvInput {
 
   /**
    * ดึงค่าจาก .env.secret หรือถามผู้ใช้ถ้าไม่มี
-   * @param {string} key - ชื่อตัวแปร (และใช้เป็นข้อความ prompt)
-   * @param {string} [defaultValue] - ค่าเริ่มต้นถ้าผู้ใช้ไม่กรอก
-   * @returns {Promise<string>} ค่าที่ได้
+   * @param key - ชื่อตัวแปร (และใช้เป็นข้อความ prompt)
+   * @param defaultValue - ค่าเริ่มต้นถ้าผู้ใช้ไม่กรอก
+   * @returns ค่าที่ได้
    */
-  async get(key, defaultValue) {
+  async get(key: string, defaultValue?: string): Promise<string> {
     // 1. หาจาก process.env ก่อน (ที่โหลดมาจาก .env.secret แล้ว)
     if (process.env[key]) {
-      return process.env[key];
+      return process.env[key]!;
     }
 
     // 2. ถ้าไม่มี ให้ถามผู้ใช้
@@ -46,12 +49,13 @@ export class EnvInput {
           process.env[key] = value;
         }
 
-        resolve(value);
+        // resolve with value, defaulting to empty string if undefined (though logic above handles trimming)
+        resolve(value || "");
       });
     });
   }
 
-  close() {
+  close(): void {
     this.rl.close();
   }
 }

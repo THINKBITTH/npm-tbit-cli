@@ -1,9 +1,20 @@
 import { EC2Client, ModifySecurityGroupRulesCommand } from "@aws-sdk/client-ec2";
-import { EnvInput } from "../utils/env-input.mjs";
+import { EnvInput } from "../utils/env-input.js";
 
-async function getConfig(envInput) {
+interface SgConfig {
+  SG_ID: string;
+  RULE_ID: string;
+  PORT: number;
+  PROTOCOL: string;
+  FROM_PORT: number;
+  TO_PORT: number;
+  REGION: string;
+  RULE_NAME: string;
+}
+
+async function getConfig(envInput: EnvInput): Promise<SgConfig> {
   console.log("--- Configuration Setup ---");
-  const config = {};
+  const config = {} as SgConfig;
   
   config.SG_ID = await envInput.get("SG_ID");
   config.RULE_ID = await envInput.get("RULE_ID");
@@ -57,9 +68,9 @@ async function updateSecurityGroup() {
         {
           SecurityGroupRuleId: CONFIG.RULE_ID,
           SecurityGroupRule: {
-            IpProtocol: "tcp",
-            FromPort: CONFIG.PORT,
-            ToPort: CONFIG.PORT,
+            IpProtocol: CONFIG.PROTOCOL,
+            FromPort: CONFIG.FROM_PORT,
+            ToPort: CONFIG.TO_PORT,
             CidrIpv4: cidrIp,
             Description: CONFIG.RULE_NAME,
           },
@@ -71,7 +82,7 @@ async function updateSecurityGroup() {
     await client.send(command);
     
     console.log(`✅ Successfully updated Rule ${CONFIG.RULE_ID} to IP ${cidrIp}`);
-  } catch (error) {
+  } catch (error: any) {
     envInput.close();
     console.error("❌ Error: Update failed.");
     if (error.name === "CredentialsProviderError") {

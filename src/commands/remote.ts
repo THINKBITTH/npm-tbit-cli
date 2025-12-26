@@ -4,19 +4,19 @@ import fs from 'fs';
 import dotenv from 'dotenv';
 import readline from 'readline/promises'; // ใช้เวอร์ชัน promise เพื่อให้ใช้ await ได้
 import os from 'os';
-import updateEnvFile from '../utils/update-env-file.mjs';
+import updateEnvFile from '../utils/update-env-file.js';
 
-const envPath = path.join(process.cwd(), '.env.secret');
+const envPath: string = path.join(process.cwd(), '.env.secret');
 
 // ฟังก์ชันสำหรับเปลี่ยน ~ เป็น home directory จริงๆ
-function expandHomeDir(filePath) {
+function expandHomeDir(filePath: string): string {
     if (filePath.startsWith('~')) {
         return path.join(os.homedir(), filePath.slice(1));
     }
     return filePath;
 }
 
-async function askQuestion(query) {
+async function askQuestion(query: string): Promise<string> {
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
@@ -48,7 +48,7 @@ async function connectToEC2() {
   }
 
   // 3. บันทึกลง .env.secret ถ้ามีการกรอกข้อมูลใหม่
-  if (needsUpdate) {
+  if (needsUpdate && AWS_EC2_INSTANCE_ID && AWS_PRIVATE_KEY_PATH) {
     const updates = {
       AWS_EC2_INSTANCE_ID: AWS_EC2_INSTANCE_ID,
       AWS_PRIVATE_KEY_PATH: AWS_PRIVATE_KEY_PATH,
@@ -60,7 +60,7 @@ async function connectToEC2() {
   }
 
   const USER = "ec2-user";
-  const expandedKeyPath = expandHomeDir(AWS_PRIVATE_KEY_PATH);
+  const expandedKeyPath = expandHomeDir(AWS_PRIVATE_KEY_PATH || "");
   const keyFullPath = path.resolve(expandedKeyPath);
 
   // 4. ตรวจสอบไฟล์ Key ว่ามีอยู่จริงไหม
@@ -88,7 +88,7 @@ async function connectToEC2() {
       shell: true
     });
 
-  } catch (error) {
+  } catch (error: any) {
     console.error(`\x1b[31m❌ Error: ${error.message}\x1b[0m`);
     process.exit(1);
   }

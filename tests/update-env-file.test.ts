@@ -2,7 +2,7 @@ import { test, describe, it, after, beforeEach } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'fs';
 import path from 'path';
-import updateEnvFile from '../utils/update-env-file.mjs';
+import updateEnvFile from '../src/utils/update-env-file.js';
 
 const TEST_ENV_PATH = path.join(process.cwd(), '.env.test');
 

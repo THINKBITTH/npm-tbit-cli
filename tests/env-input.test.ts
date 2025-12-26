@@ -1,5 +1,5 @@
 import { describe, it, after, beforeEach } from 'node:test';
-import { EnvInput } from '../utils/env-input.mjs';
+import { EnvInput } from '../src/utils/env-input.js';
 import assert from 'node:assert/strict';
 import fs from 'fs';
 import path from 'path';
@@ -33,7 +33,7 @@ describe('EnvInput Class', () => {
     const envInput = new EnvInput(TEST_ENV_FILE);
     
     // Mock rl to ensure it's not called (though logical flow prevents it)
-    envInput.rl.question = () => {
+    (envInput as any).rl.question = () => {
       assert.fail("Should not prompt user if env var exists");
     };
 
@@ -47,7 +47,7 @@ describe('EnvInput Class', () => {
     const envInput = new EnvInput(TEST_ENV_FILE);
     
     // Mock user input
-    envInput.rl.question = (query, callback) => {
+    (envInput as any).rl.question = (query: string, callback: (answer: string) => void) => {
       callback('user_provided_value');
     };
 
@@ -71,7 +71,7 @@ describe('EnvInput Class', () => {
     const envInput = new EnvInput(TEST_ENV_FILE);
 
     // Mock empty user input
-    envInput.rl.question = (query, callback) => {
+    (envInput as any).rl.question = (query: string, callback: (answer: string) => void) => {
       callback(''); // User hits Enter
     };
 

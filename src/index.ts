@@ -1,18 +1,17 @@
 #!/usr/bin/env node
+import displayHelp from "./commands/help.js";
+import loadEnv from "./commands/load-env.js";
+import connectToEC2 from "./commands/remote.js";
+import updateSecurityGroup from "./commands/update-sgr.js";
 
-import displayHelp from "./commands/help.mjs";
-import loadEnv from "./commands/load-env.mjs";
-import connectToEC2 from "./commands/remote.mjs";
-import updateSecurityGroup from "./commands/update-sgr.mjs";
-
-const command = process.argv[2];
+const command: string | undefined = process.argv[2];
 
 switch (command) {
   case 'load-env':
   case '--load-env':
   case '-l':
     console.log('\x1b[36m%s\x1b[0m', '🚀 Initializing environment synchronization...');
-    loadEnv().catch(err => {
+    loadEnv().catch((err: Error) => {
       console.error('\x1b[31m%s\x1b[0m', `❌ Execution failed: ${err.message}`);
       process.exit(1);
     });
@@ -35,7 +34,7 @@ switch (command) {
   case '--remote':
   case '-r':
     console.log('\x1b[36m%s\x1b[0m', '🚀 Initializing remote environment synchronization...');
-    connectToEC2().catch(err => {
+    connectToEC2().catch((err: Error) => {
       console.error('\x1b[31m%s\x1b[0m', `❌ Execution failed: ${err.message}`);
       process.exit(1);
     });
@@ -45,7 +44,7 @@ switch (command) {
   case '--update-sgr':
   case '-s':
     console.log('\x1b[36m%s\x1b[0m', '🚀 Initializing update security group...');
-    updateSecurityGroup().catch(err => {
+    updateSecurityGroup().catch((err: Error) => {
       console.error('\x1b[31m%s\x1b[0m', `❌ Execution failed: ${err.message}`);
       process.exit(1);
     });
