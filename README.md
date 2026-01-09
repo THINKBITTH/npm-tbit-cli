@@ -20,13 +20,13 @@ A custom CLI tool designed to streamline development workflows, specifically for
 #### Run via npx (Recommended)
 
 ```bash
-npx @thinkbitth/tbit-cli <command>
+npx @sakyo/npm-tbit-cli <command>
 ```
 
 #### Install Globally
 
 ```bash
-npm install -g @thinkbitth/tbit-cli
+npm install -g @sakyo/npm-tbit-cli
 tbit --help
 ```
 
@@ -58,16 +58,17 @@ The tool uses `.env.secret` in your project root to persist settings like `AWS_R
 
 ### 🚀 เริ่มต้นใช้งาน
 
+
 #### รันผ่าน npx (แนะนำ)
 
 ```bash
-npx @thinkbitth/tbit-cli <command>
+npx @sakyo/npm-tbit-cli <command>
 ```
 
 #### ติดตั้งแบบ Global
 
 ```bash
-npm install -g @thinkbitth/tbit-cli
+npm install -g @sakyo/npm-tbit-cli
 tbit --help
 ```
 
