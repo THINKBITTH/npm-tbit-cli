@@ -1,5 +1,5 @@
 {
-  "name": "@thinkbitth/tbit-cli",
+  "name": "@sakyo/npm-tbit-cli",
   "version": "2.2.1",
   "description": "",
   "main": "dist/index.js",
@@ -12,6 +12,9 @@
   },
   "imports": {
     "#*": "./dist/*.js"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
     "build": "tsc",
